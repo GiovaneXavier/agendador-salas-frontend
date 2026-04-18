@@ -64,8 +64,9 @@ export function BookingForm({ roomId, date, initialStartMinute, onSubmit, isLoad
       {apiError && <ErrorAlert message={apiError} />}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Horário de início</label>
+        <label htmlFor="start_minute" className="block text-sm font-medium text-gray-700 mb-1">Horário de início</label>
         <select
+          id="start_minute"
           {...register('start_minute')}
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-1"
         >
@@ -77,8 +78,9 @@ export function BookingForm({ roomId, date, initialStartMinute, onSubmit, isLoad
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Duração</label>
+        <label htmlFor="duration_minutes" className="block text-sm font-medium text-gray-700 mb-1">Duração</label>
         <select
+          id="duration_minutes"
           {...register('duration_minutes')}
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-1"
         >
@@ -90,8 +92,9 @@ export function BookingForm({ roomId, date, initialStartMinute, onSubmit, isLoad
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
+        <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
         <input
+          id="username"
           {...register('username')}
           placeholder="nome.sobrenome"
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-1"
