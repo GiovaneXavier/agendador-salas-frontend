@@ -5,14 +5,11 @@ import type { ValidDuration } from '../types/booking'
 import { VirtualKeyboard } from '../components/VirtualKeyboard'
 import { useCreateBooking } from '../hooks/useCreateBooking'
 import { parseApiError } from '../lib/api-client'
+import { deriveFullName } from '../lib/utils'
 import { Spinner } from '../components/ui/Spinner'
 
 function minuteToTime(m: number) {
   return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`
-}
-
-function deriveFullName(username: string): string {
-  return username.split('.').map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ')
 }
 
 interface Props {
@@ -78,7 +75,7 @@ export function BookingStep2Screen({ room, date, startMinute, duration }: Props)
             {isValid && (
               <>
                 <div className="border-t border-dashed border-gray-200 my-3" />
-                <p className="text-[10px] tracking-widest text-green-600 mb-1">✓ ENCONTRADO</p>
+                <p className="text-[10px] tracking-widest text-green-600 mb-1">✓ FORMATO VÁLIDO</p>
                 <p className="font-bold text-gray-900">{deriveFullName(username)}</p>
               </>
             )}

@@ -24,8 +24,6 @@ function getWeekdays(count: number): { label: string; day: number; date: string 
   return result
 }
 
-const today = format(new Date(), 'yyyy-MM-dd')
-
 function RoomRowWrapper({ room, date, isToday }: { room: Room; date: string; isToday: boolean }) {
   const { data: bookings = [], isLoading } = useBookings(room.id, date)
   const { navigate } = useNav()
@@ -49,7 +47,8 @@ function RoomRowWrapper({ room, date, isToday }: { room: Room; date: string; isT
 }
 
 export function HomeScreen() {
-  const { data: rooms, isLoading } = useRooms()
+  const today = format(new Date(), 'yyyy-MM-dd')
+  const { data: rooms, isLoading, isError } = useRooms()
   const { selectedDate, setSelectedDate } = useNav()
   const days = getWeekdays(4)
   const isToday = selectedDate === today
@@ -94,6 +93,12 @@ export function HomeScreen() {
       <div className="flex-1 px-8 pb-6 space-y-4 overflow-y-auto">
         {isLoading && (
           <div className="flex justify-center py-16"><Spinner size={28} /></div>
+        )}
+        {isError && (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <p className="text-gray-500 font-semibold">Não foi possível conectar à API</p>
+            <p className="text-xs text-gray-400 tracking-wide">Verifique a conexão com o servidor</p>
+          </div>
         )}
         {rooms?.map(room => (
           <RoomRowWrapper key={room.id} room={room} date={selectedDate} isToday={isToday} />
