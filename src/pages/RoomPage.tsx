@@ -14,7 +14,7 @@ import { Modal } from '../components/ui/Modal'
 import { Spinner } from '../components/ui/Spinner'
 import { ErrorAlert } from '../components/ui/ErrorAlert'
 import { parseApiError } from '../lib/api-client'
-import { Booking, CreateBookingPayload } from '../types/booking'
+import type { Booking, CreateBookingPayload } from '../types/booking'
 
 export function RoomPage() {
   const { id: roomId = '' } = useParams<{ id: string }>()

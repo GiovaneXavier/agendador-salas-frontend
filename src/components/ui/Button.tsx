@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes } from 'react'
 import { Spinner } from './Spinner'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

@@ -5,7 +5,7 @@ import { useBookings } from '../hooks/useBookings'
 import { RoomCard } from '../components/RoomCard'
 import { Spinner } from '../components/ui/Spinner'
 import { ErrorAlert } from '../components/ui/ErrorAlert'
-import { Room } from '../types/room'
+import type { Room } from '../types/room'
 
 const today = format(new Date(), 'yyyy-MM-dd')
 
