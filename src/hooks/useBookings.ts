@@ -6,5 +6,6 @@ export function useBookings(roomId: string, date: string) {
     queryKey: ['bookings', roomId, date],
     queryFn: () => getBookings(roomId, date),
     enabled: !!roomId && !!date,
+    refetchInterval: 60_000,
   })
 }
