@@ -1,4 +1,4 @@
-import { Booking } from '../types/booking'
+import type { Booking } from '../types/booking'
 import { DAY_START, DAY_END, TOTAL_SLOTS } from '../lib/constants'
 import { BookingBlock } from './BookingBlock'
 

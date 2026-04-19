@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Booking } from '../types/booking'
+import type { Booking } from '../types/booking'
 import { Modal } from './ui/Modal'
 import { Button } from './ui/Button'
 import { ErrorAlert } from './ui/ErrorAlert'

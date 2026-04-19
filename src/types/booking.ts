@@ -1,4 +1,5 @@
-import { ValidDuration } from '../lib/constants'
+import type { ValidDuration } from '../lib/constants'
+export type { ValidDuration }
 
 export interface Booking {
   id: string
@@ -10,6 +11,7 @@ export interface Booking {
   start_time: string
   end_time: string
   username: string
+  full_name: string
   created_at: string
 }
 
@@ -23,9 +25,4 @@ export interface CreateBookingPayload {
 
 export interface CancelBookingPayload {
   username: string
-}
-
-export interface ApiError {
-  message: string
-  errors?: Record<string, string[]>
 }

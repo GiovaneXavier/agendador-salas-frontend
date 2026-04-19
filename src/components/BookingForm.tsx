@@ -1,17 +1,18 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { DAY_START, DAY_END, VALID_DURATIONS, ValidDuration } from '../lib/constants'
-import { CreateBookingPayload } from '../types/booking'
+import { DAY_START, DAY_END, VALID_DURATIONS } from '../lib/constants'
+import type { CreateBookingPayload, ValidDuration } from '../types/booking'
 import { Button } from './ui/Button'
 import { ErrorAlert } from './ui/ErrorAlert'
 
+const durationValues = VALID_DURATIONS as unknown as [number, ...number[]]
+
 const schema = z.object({
-  start_minute:     z.coerce.number().int().min(DAY_START).max(DAY_END - 30),
-  duration_minutes: z.coerce.number().refine((v): v is ValidDuration =>
-    (VALID_DURATIONS as readonly number[]).includes(v),
-    { message: 'Duração deve ser 30, 60, 90 ou 120 min' }
-  ),
+  start_minute:     z.number().int().min(DAY_START).max(DAY_END - 30),
+  duration_minutes: z.number().refine(v => durationValues.includes(v), {
+    message: 'Duração deve ser 30, 60, 90 ou 120 min',
+  }),
   username: z
     .string()
     .min(3, 'Mínimo 3 caracteres')
@@ -19,7 +20,12 @@ const schema = z.object({
     .regex(/^[a-zA-Z0-9._\-]+$/, 'Apenas letras, números, pontos, hífens e underscores'),
 })
 
-type FormData = z.infer<typeof schema>
+// Tipo manual para o formulário — evita conflito de inferência Zod v4 + RHF
+interface FormData {
+  start_minute: number
+  duration_minutes: number
+  username: string
+}
 
 interface BookingFormProps {
   roomId: string
@@ -40,7 +46,8 @@ export function BookingForm({ roomId, date, initialStartMinute, onSubmit, isLoad
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(schema) as any,
     defaultValues: { start_minute: initialStartMinute, duration_minutes: 30, username: '' },
   })
 
@@ -67,7 +74,7 @@ export function BookingForm({ roomId, date, initialStartMinute, onSubmit, isLoad
         <label htmlFor="start_minute" className="block text-sm font-medium text-gray-700 mb-1">Horário de início</label>
         <select
           id="start_minute"
-          {...register('start_minute')}
+          {...register('start_minute', { valueAsNumber: true })}
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-1"
         >
           {slots.map(m => (
@@ -81,7 +88,7 @@ export function BookingForm({ roomId, date, initialStartMinute, onSubmit, isLoad
         <label htmlFor="duration_minutes" className="block text-sm font-medium text-gray-700 mb-1">Duração</label>
         <select
           id="duration_minutes"
-          {...register('duration_minutes')}
+          {...register('duration_minutes', { valueAsNumber: true })}
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-1"
         >
           {VALID_DURATIONS.map(d => (

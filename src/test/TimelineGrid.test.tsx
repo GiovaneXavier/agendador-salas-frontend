@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TimelineGrid } from '../components/TimelineGrid'
-import { Booking } from '../types/booking'
+import type { Booking } from '../types/booking'
 
 const noop = () => {}
 
@@ -16,6 +16,7 @@ const makeBooking = (id: string, start: number, duration: 30 | 60 | 90 | 120): B
   start_time: `${String(Math.floor(start / 60)).padStart(2, '0')}:${String(start % 60).padStart(2, '0')}`,
   end_time: `${String(Math.floor((start + duration) / 60)).padStart(2, '0')}:${String((start + duration) % 60).padStart(2, '0')}`,
   username: 'g.xavier',
+  full_name: 'Gabriel Xavier',
   created_at: '2024-06-15T08:00:00Z',
 })
 

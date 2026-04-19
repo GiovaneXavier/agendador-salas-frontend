@@ -1,5 +1,5 @@
 import { apiClient } from '../lib/api-client'
-import { Booking, CancelBookingPayload, CreateBookingPayload } from '../types/booking'
+import type { Booking, CancelBookingPayload, CreateBookingPayload } from '../types/booking'
 
 export async function getBookings(roomId: string, date: string): Promise<Booking[]> {
   const { data } = await apiClient.get<{ data: Booking[] }>('/bookings', {

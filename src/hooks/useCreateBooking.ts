@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createBooking } from '../api/bookings'
-import { CreateBookingPayload } from '../types/booking'
+import type { CreateBookingPayload } from '../types/booking'
 
 export function useCreateBooking(roomId: string, date: string) {
   const qc = useQueryClient()
