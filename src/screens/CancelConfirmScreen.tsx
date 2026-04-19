@@ -18,7 +18,7 @@ export function CancelConfirmScreen({ booking, room }: Props) {
   const [error, setError] = useState('')
   const cancelMutation = useCancelBooking(booking.room_id, selectedDate)
 
-  const isValid = username.length >= 3
+  const isValid = username.length >= 3 && /^[a-zA-Z0-9._-]+$/.test(username)
 
   const handleCancel = () => {
     setError('')
