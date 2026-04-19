@@ -100,7 +100,7 @@ export function ConfirmationScreen({ variant, roomName, startTime, endTime, date
 
       {/* Countdown */}
       <p className="text-xs text-gray-400 tracking-widest mt-6 font-mono">
-        voltando {variant === 'cancelled' ? '' : 'à tela inicial '}em {remaining}s…
+        voltando à tela inicial em {remaining}s…
       </p>
 
       <button

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNav } from '../contexts/NavigationContext'
 import type { Booking } from '../types/booking'
 import type { Room } from '../types/room'
@@ -12,9 +13,11 @@ interface Props {
 
 export function BookingDetailsScreen({ booking, room }: Props) {
   const { navigate, goHome, selectedDate } = useNav()
+  const [extendError, setExtendError] = useState('')
   const extendMutation = useExtendBooking(booking.room_id, selectedDate)
 
   const handleExtend = () => {
+    setExtendError('')
     extendMutation.mutate(booking.id, {
       onSuccess: (updated) => {
         navigate({
@@ -27,7 +30,7 @@ export function BookingDetailsScreen({ booking, room }: Props) {
           fullName: updated.full_name,
         })
       },
-      onError: (err) => alert(parseApiError(err)),
+      onError: (err) => setExtendError(parseApiError(err)),
     })
   }
 
@@ -80,6 +83,12 @@ export function BookingDetailsScreen({ booking, room }: Props) {
           <p className="text-sm text-gray-400 italic">
             para mexer nessa reserva você precisa confirmar com seu usuário →
           </p>
+
+          {extendError && (
+            <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+              {extendError}
+            </div>
+          )}
         </div>
 
         {/* Ações */}

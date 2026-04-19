@@ -28,10 +28,9 @@ export function BookingStep1Screen({ room, date, startMinute }: Props) {
     <div className="flex flex-col h-full">
       {/* Step indicator */}
       <div className="px-8 pt-6 pb-4">
-        <p className="text-[11px] tracking-widest text-gray-400">PASSO 1 DE 3 · NOVA RESERVA</p>
+        <p className="text-[11px] tracking-widest text-gray-400">PASSO 1 DE 2 · NOVA RESERVA</p>
         <div className="flex gap-1.5 mt-2">
           <div className="h-0.5 w-16 bg-gray-900 rounded-full" />
-          <div className="h-0.5 w-16 bg-gray-200 rounded-full" />
           <div className="h-0.5 w-16 bg-gray-200 rounded-full" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mt-4">Quanto tempo?</h1>
@@ -43,7 +42,11 @@ export function BookingStep1Screen({ room, date, startMinute }: Props) {
           <div>
             <p className="text-[10px] tracking-widest text-gray-400 mb-1">SALA</p>
             <p className="font-bold text-lg text-gray-900">{room.name}</p>
-            {/* capacity etc - omitted for simplicity */}
+            {(room.capacity > 0 || room.resources.length > 0) && (
+              <p className="text-[10px] tracking-widest mt-0.5" style={{ color: room.color_accent, opacity: 0.6 }}>
+                {[room.capacity > 0 ? `${room.capacity} PESSOAS` : null, ...room.resources].filter(Boolean).join(' · ')}
+              </p>
+            )}
           </div>
           <div className="border-t border-dashed border-gray-200" />
           <div>
@@ -67,11 +70,10 @@ export function BookingStep1Screen({ room, date, startMinute }: Props) {
               <button
                 key={d}
                 onClick={() => setSelected(d)}
+                style={selected === d ? { borderColor: room.color_accent, backgroundColor: room.color_bg } : {}}
                 className={[
                   'border-2 rounded-2xl p-6 text-left cursor-pointer transition-colors',
-                  selected === d
-                    ? 'border-red-300 bg-red-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300',
+                  selected === d ? '' : 'border-gray-200 bg-white hover:border-gray-300',
                 ].join(' ')}
               >
                 <p className="text-4xl font-bold text-gray-900">{d}</p>

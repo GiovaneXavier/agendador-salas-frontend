@@ -57,11 +57,10 @@ export function BookingStep2Screen({ room, date, startMinute, duration }: Props)
     <div className="flex flex-col h-full">
       {/* Step indicator */}
       <div className="px-8 pt-6 pb-4">
-        <p className="text-[11px] tracking-widest text-gray-400">PASSO 2 DE 3 · NOVA RESERVA</p>
+        <p className="text-[11px] tracking-widest text-gray-400">PASSO 2 DE 2 · NOVA RESERVA</p>
         <div className="flex gap-1.5 mt-2">
           <div className="h-0.5 w-16 bg-gray-900 rounded-full" />
           <div className="h-0.5 w-16 bg-gray-900 rounded-full" />
-          <div className="h-0.5 w-16 bg-gray-200 rounded-full" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mt-4">Qual seu ID de colaborador?</h1>
         <p className="font-script text-gray-400 mt-1">digite seu usuário</p>
