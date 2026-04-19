@@ -3,4 +3,6 @@ export interface Room {
   name: string
   color_bg: string
   color_accent: string
+  capacity: number
+  resources: string[]
 }

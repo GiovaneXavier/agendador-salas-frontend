@@ -2,12 +2,6 @@ import type { Room } from '../types/room'
 import type { Booking } from '../types/booking'
 import { InlineTimeline } from './InlineTimeline'
 
-// Metadados temporários — serão vindos da API quando disponíveis
-const ROOM_META: Record<string, { capacity: number; resource: string }> = {
-  'a1b2c3d4-0001-0001-0001-000000000001': { capacity: 8, resource: 'TV' },
-  'a1b2c3d4-0002-0002-0002-000000000002': { capacity: 4, resource: 'WHITEBOARD' },
-}
-
 function getRoomStatus(bookings: Booking[], isToday: boolean): string {
   if (!isToday) {
     const n = bookings.length
@@ -32,9 +26,12 @@ interface RoomRowProps {
 }
 
 export function RoomRow({ room, bookings, date, isToday, onSlotClick, onBookingClick }: RoomRowProps) {
-  const meta = ROOM_META[room.id]
   const status = getRoomStatus(bookings, isToday)
   const isOccupied = isToday && status.startsWith('Ocupada')
+  const metaLabel = [
+    room.capacity > 0 ? `${room.capacity} PESSOAS` : null,
+    ...room.resources,
+  ].filter(Boolean).join(' · ')
 
   return (
     <div
@@ -47,9 +44,9 @@ export function RoomRow({ room, bookings, date, isToday, onSlotClick, onBookingC
           <h2 className="font-script text-3xl leading-tight" style={{ color: room.color_accent }}>
             {room.name}
           </h2>
-          {meta && (
+          {metaLabel && (
             <p className="text-[11px] tracking-widest mt-1" style={{ color: room.color_accent, opacity: 0.6 }}>
-              {meta.capacity} PESSOAS · {meta.resource}
+              {metaLabel}
             </p>
           )}
           <p
