@@ -1,6 +1,8 @@
 import type { Room } from '../types/room'
 import type { Booking } from '../types/booking'
+import type { RoomStatusData } from '../types/roomStatus'
 import { InlineTimeline } from './InlineTimeline'
+import { StatusBadge } from './StatusBadge'
 
 function getRoomStatus(bookings: Booking[], isToday: boolean): string {
   if (!isToday) {
@@ -21,13 +23,13 @@ interface RoomRowProps {
   bookings: Booking[]
   date: string
   isToday: boolean
+  sensorStatus?: RoomStatusData
   onSlotClick: (room: Room, date: string, startMinute: number) => void
   onBookingClick: (booking: Booking, room: Room) => void
 }
 
-export function RoomRow({ room, bookings, date, isToday, onSlotClick, onBookingClick }: RoomRowProps) {
+export function RoomRow({ room, bookings, date, isToday, sensorStatus, onSlotClick, onBookingClick }: RoomRowProps) {
   const status = getRoomStatus(bookings, isToday)
-  const isOccupied = isToday && status.startsWith('Ocupada')
   const metaLabel = [
     room.capacity > 0 ? `${room.capacity} PESSOAS` : null,
     ...room.resources,
@@ -41,18 +43,20 @@ export function RoomRow({ room, bookings, date, isToday, onSlotClick, onBookingC
       <div className="flex gap-6">
         {/* Left info panel */}
         <div className="w-44 flex-shrink-0">
-          <h2 className="font-script text-3xl leading-tight" style={{ color: room.color_accent }}>
-            {room.name}
-          </h2>
+          <div className="flex items-start justify-between gap-2">
+            <h2 className="font-script text-3xl leading-tight" style={{ color: room.color_accent }}>
+              {room.name}
+            </h2>
+            {sensorStatus && (
+              <StatusBadge color={sensorStatus.color} label={sensorStatus.label} />
+            )}
+          </div>
           {metaLabel && (
             <p className="text-[11px] tracking-widest mt-1" style={{ color: room.color_accent, opacity: 0.6 }}>
               {metaLabel}
             </p>
           )}
-          <p
-            className="text-sm font-semibold mt-3"
-            style={{ color: isOccupied ? room.color_accent : room.color_accent }}
-          >
+          <p className="text-sm font-semibold mt-3" style={{ color: room.color_accent }}>
             {status}
           </p>
         </div>
