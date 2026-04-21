@@ -3,6 +3,7 @@ import type { Booking, ValidDuration } from '../types/booking'
 
 export type AppScreen =
   | { kind: 'home' }
+  | { kind: 'dashboard' }
   | { kind: 'booking-details'; booking: Booking; room: Room }
   | { kind: 'book-step1'; room: Room; date: string; startMinute: number }
   | { kind: 'book-step2'; room: Room; date: string; startMinute: number; duration: ValidDuration }

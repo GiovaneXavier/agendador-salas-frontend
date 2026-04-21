@@ -6,6 +6,7 @@ import { NavigationContext } from './contexts/NavigationContext'
 import type { AppScreen } from './lib/navigation'
 import { TotemHeader } from './components/TotemHeader'
 import { HomeScreen } from './screens/HomeScreen'
+import { DashboardScreen } from './screens/DashboardScreen'
 import { BookingDetailsScreen } from './screens/BookingDetailsScreen'
 import { BookingStep1Screen } from './screens/BookingStep1Screen'
 import { BookingStep2Screen } from './screens/BookingStep2Screen'
@@ -23,6 +24,8 @@ export default function App() {
     switch (screen.kind) {
       case 'home':
         return <HomeScreen />
+      case 'dashboard':
+        return <DashboardScreen />
       case 'booking-details':
         return <BookingDetailsScreen booking={screen.booking} room={screen.room} />
       case 'book-step1':

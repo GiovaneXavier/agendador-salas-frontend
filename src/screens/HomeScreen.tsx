@@ -2,6 +2,7 @@ import { format, addDays, isWeekend } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { useRooms } from '../hooks/useRooms'
 import { useBookings } from '../hooks/useBookings'
+import { useRoomStatusMap } from '../hooks/useRoomStatusMap'
 import { RoomRow } from '../components/RoomRow'
 import { Spinner } from '../components/ui/Spinner'
 import { useNav } from '../contexts/NavigationContext'
@@ -24,7 +25,14 @@ function getWeekdays(count: number): { label: string; day: number; date: string 
   return result
 }
 
-function RoomRowWrapper({ room, date, isToday }: { room: Room; date: string; isToday: boolean }) {
+function RoomRowWrapper({
+  room, date, isToday, statusMap,
+}: {
+  room: Room
+  date: string
+  isToday: boolean
+  statusMap: ReturnType<typeof useRoomStatusMap>
+}) {
   const { data: bookings = [], isLoading } = useBookings(room.id, date)
   const { navigate } = useNav()
 
@@ -40,6 +48,7 @@ function RoomRowWrapper({ room, date, isToday }: { room: Room; date: string; isT
       bookings={bookings}
       date={date}
       isToday={isToday}
+      sensorStatus={statusMap[room.id]}
       onSlotClick={(r, d, min) => navigate({ kind: 'book-step1', room: r, date: d, startMinute: min })}
       onBookingClick={(b: Booking, r: Room) => navigate({ kind: 'booking-details', booking: b, room: r })}
     />
@@ -49,7 +58,8 @@ function RoomRowWrapper({ room, date, isToday }: { room: Room; date: string; isT
 export function HomeScreen() {
   const today = format(new Date(), 'yyyy-MM-dd')
   const { data: rooms, isLoading, isError } = useRooms()
-  const { selectedDate, setSelectedDate } = useNav()
+  const { selectedDate, setSelectedDate, navigate } = useNav()
+  const statusMap = useRoomStatusMap()
   const days = getWeekdays(4)
   const isToday = selectedDate === today
 
@@ -101,13 +111,19 @@ export function HomeScreen() {
           </div>
         )}
         {rooms?.map(room => (
-          <RoomRowWrapper key={room.id} room={room} date={selectedDate} isToday={isToday} />
+          <RoomRowWrapper key={room.id} room={room} date={selectedDate} isToday={isToday} statusMap={statusMap} />
         ))}
       </div>
 
       {/* Rodapé */}
-      <footer className="text-center text-xs text-gray-400 tracking-wider py-3 border-t border-gray-100">
-        Toque em um horário · Reservas até o fim do expediente (20:00)
+      <footer className="flex items-center justify-between px-8 text-xs text-gray-400 tracking-wider py-3 border-t border-gray-100">
+        <span>Toque em um horário · Reservas até o fim do expediente (20:00)</span>
+        <button
+          onClick={() => navigate({ kind: 'dashboard' })}
+          className="text-gray-400 hover:text-gray-600 transition-colors underline underline-offset-2"
+        >
+          Painel geral
+        </button>
       </footer>
     </div>
   )
