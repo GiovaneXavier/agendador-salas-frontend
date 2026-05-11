@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { useNav } from '../contexts/NavigationContext'
 import type { Room } from '../types/room'
 import type { ValidDuration } from '../types/booking'
-import { VALID_DURATIONS } from '../lib/constants'
-
-const DURATIONS = VALID_DURATIONS as unknown as ValidDuration[]
+import { DurationPicker } from '../components/DurationPicker'
 
 interface Props {
   room: Room
@@ -65,22 +63,12 @@ export function BookingStep1Screen({ room, date, startMinute }: Props) {
         {/* Duration grid */}
         <div className="flex-1">
           <p className="text-[11px] tracking-widest text-gray-400 mb-4">ESCOLHA A DURAÇÃO</p>
-          <div className="grid grid-cols-2 gap-3">
-            {DURATIONS.map(d => (
-              <button
-                key={d}
-                onClick={() => setSelected(d)}
-                style={selected === d ? { borderColor: room.color_accent, backgroundColor: room.color_bg } : {}}
-                className={[
-                  'border-2 rounded-2xl p-6 text-left cursor-pointer transition-colors',
-                  selected === d ? '' : 'border-gray-200 bg-white hover:border-gray-300',
-                ].join(' ')}
-              >
-                <p className="text-4xl font-bold text-gray-900">{d}</p>
-                <p className="text-xs tracking-widest text-gray-400 mt-1">MINUTOS</p>
-              </button>
-            ))}
-          </div>
+          <DurationPicker
+            value={selected}
+            onChange={setSelected}
+            accentColor={room.color_accent}
+            accentBg={room.color_bg}
+          />
           <p className="text-sm text-gray-400 mt-4 italic">→ próximo: identificação</p>
         </div>
       </div>
