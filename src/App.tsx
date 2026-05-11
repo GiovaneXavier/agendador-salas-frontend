@@ -1,7 +1,5 @@
 import { useState, useCallback } from 'react'
-import { QueryClientProvider } from '@tanstack/react-query'
 import { format } from 'date-fns'
-import { queryClient } from './lib/query-client'
 import { NavigationContext } from './contexts/NavigationContext'
 import type { AppScreen } from './lib/navigation'
 import { TotemHeader } from './components/TotemHeader'
@@ -56,15 +54,13 @@ export default function App() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContext.Provider value={{ navigate, goHome, selectedDate, setSelectedDate }}>
-        <div className="flex flex-col h-screen bg-[#f5f3ef] overflow-hidden">
-          <TotemHeader />
-          <div className="flex-1 overflow-hidden">
-            {renderScreen()}
-          </div>
+    <NavigationContext.Provider value={{ navigate, goHome, selectedDate, setSelectedDate }}>
+      <div className="flex flex-col h-screen bg-[#f5f3ef] overflow-hidden">
+        <TotemHeader />
+        <div className="flex-1 overflow-hidden">
+          {renderScreen()}
         </div>
-      </NavigationContext.Provider>
-    </QueryClientProvider>
+      </div>
+    </NavigationContext.Provider>
   )
 }
