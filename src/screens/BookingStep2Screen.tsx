@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNav } from '../contexts/NavigationContext'
 import type { Room } from '../types/room'
 import type { ValidDuration } from '../types/booking'
-import { KnoxScanner } from '../components/KnoxScanner'
+import { KnoxOCRScanner } from '../components/KnoxOCRScanner'
 import { useCreateBooking } from '../hooks/useCreateBooking'
 import { parseApiError } from '../lib/api-client'
 import { deriveFullName } from '../lib/utils'
@@ -94,7 +94,7 @@ export function BookingStep2Screen({ room, date, startMinute, duration }: Props)
 
         {/* Scanner */}
         <div className="flex-1 min-w-0">
-          <KnoxScanner onScan={handleScan} />
+          <KnoxOCRScanner onScan={handleScan} />
         </div>
       </div>
 

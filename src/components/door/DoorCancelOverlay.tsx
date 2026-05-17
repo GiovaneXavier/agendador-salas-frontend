@@ -4,7 +4,7 @@ import type { Room } from '../../types/room'
 import { useCancelBooking } from '../../hooks/useCancelBooking'
 import { parseApiError } from '../../lib/api-client'
 import { Spinner } from '../ui/Spinner'
-import { KnoxScanner } from '../KnoxScanner'
+import { KnoxOCRScanner } from '../KnoxOCRScanner'
 import { DoorOverlayShell } from './DoorOverlayShell'
 
 interface DoorCancelOverlayProps {
@@ -79,7 +79,7 @@ export function DoorCancelOverlay({ booking, room, date, onClose, onSuccess }: D
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <KnoxScanner onScan={handleScan} />
+          <KnoxOCRScanner onScan={handleScan} />
         </div>
       </div>
     </DoorOverlayShell>

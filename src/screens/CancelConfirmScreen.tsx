@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNav } from '../contexts/NavigationContext'
 import type { Booking } from '../types/booking'
 import type { Room } from '../types/room'
-import { KnoxScanner } from '../components/KnoxScanner'
+import { KnoxOCRScanner } from '../components/KnoxOCRScanner'
 import { useCancelBooking } from '../hooks/useCancelBooking'
 import { parseApiError } from '../lib/api-client'
 import { Spinner } from '../components/ui/Spinner'
@@ -80,7 +80,7 @@ export function CancelConfirmScreen({ booking, room }: Props) {
 
         {/* Scanner */}
         <div className="flex-1 min-w-0">
-          <KnoxScanner onScan={handleScan} />
+          <KnoxOCRScanner onScan={handleScan} />
         </div>
       </div>
 
